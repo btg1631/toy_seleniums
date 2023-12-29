@@ -31,7 +31,7 @@ from selenium.webdriver.support.ui import Select
 
 total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn") 
     
-for page_number in range(4,len(total_page)-1) :                                                      #페이지 넘버 별로 클릭하기 위해 순서
+for page_number in range(3,len(total_page)-1) :                                                      #페이지 넘버 별로 클릭하기 위해 순서
         total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn")  
         
         element_name = browser.find_elements(by = By.CSS_SELECTOR, value = "p.review-profile__name")                      # 닉네임 리스트
@@ -54,11 +54,9 @@ for page_number in range(4,len(total_page)-1) :                                 
             print("{}".format(name))
             print("{}".format(detail))
             print("{}".format(comment))
-            
-        if total_page[page_number] == "div.pagination.textRight > div > a.fa.fa-angle-right.paging-btn.btn.next" :
-            total_page[page_number].click()
-        elif total_page[page_number] == "div.pagination.textRight > div > a.fa.fa-angle-right.paging-btn.btn.next" :
-            total_page[page_number].click()
+        
+        if page_number < len(total_page) :
+            total_page[page_number+1].click()
         else :
             break
 pass
