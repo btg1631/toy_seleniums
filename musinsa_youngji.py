@@ -7,6 +7,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time
 
+# mongodb 연결
+def Connectdb(collection_name):
+    from pymongo import MongoClient
+    mongoClient = MongoClient("mongodb://localhost:27017")
+    database = mongoClient["gatheringdatas"]
+    collection = database[collection_name]
+    return collection
+
 #  uri에 의한 Browser 가져오기
 def getBrowserFromURI(uri):
     webdriver_manager_directory = ChromeDriverManager().install()
@@ -14,21 +22,20 @@ def getBrowserFromURI(uri):
     browser.get(uri)    # - 주소 입력
     return browser
 
-# 제품 클릭
-def clickElement(browser, collection):
+
+def clickCategory(browser):
     # 카테고리 클릭 : div:nth-child(1) > div.sc-8hpehb-7.liOFHO > ul > li:nth-child(1) > a
     category = browser.find_element(by=By.CSS_SELECTOR, value="div:nth-child(1) > div.sc-8hpehb-7.liOFHO > ul > li:nth-child(1) > a")
     category.click()
 
-    # for element in element_bundle[0:5]:
-    for index in range(4):
-        element_bundle = browser.find_elements(by=By.CSS_SELECTOR, value="a.img-block")
-        element_bundle[index].click()
-        time.sleep(1)
 
-        getElement(browser, collection)
-        backElement(browser)
-    return 0
+# 제품 클릭
+def clickElement(browser, collection, index):
+    # # for element in element_bundle[0:5]:
+    # for index in range(4):
+    element_bundle = browser.find_elements(by=By.CSS_SELECTOR, value="a.img-block")
+    element_bundle[index].click()
+    time.sleep(1)
 
 
 
@@ -56,12 +63,12 @@ def getElement(browser, collection):
 def backElement(browser):
     browser.back()
     time.sleep(3)
-    return 0
+    
 
 # 브라우저 종료
 def quitBrowser(browser):
     browser.quit()
-    return 0
+    
 
 if __name__ == "__main__":
     try:
