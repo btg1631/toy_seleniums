@@ -4,8 +4,9 @@ def main() :
     try:
         uri="https://www.musinsa.com/app/"
         browser = musinsa_youngji.getBrowserFromURI(uri)
-        musinsa_youngji.clickCategory(browser)
-        musinsa_youngji.clickElement(browser)
+        collection = musinsa_youngji.Connectdb("musinsa_item")
+        musinsa_youngji.clickElement(browser, collection)
+        element_id = musinsa_youngji.getElement(browser, collection)
     except:
         pass    # 업무 코드 문제 발생 시 대처 코드
     finally :

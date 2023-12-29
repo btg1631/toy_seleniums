@@ -74,6 +74,7 @@ if __name__ == "__main__":
         browser = getBrowserFromURI("https://www.musinsa.com/app/")
         collection = Connectdb("musinsa_item")
         clickElement(browser, collection)
+        element_id = getElement(browser, collection)
     except:
         pass
     finally :
