@@ -25,7 +25,7 @@ def clickElement(browser):
     for index in range(4):
         element_bundle = browser.find_elements(by=By.CSS_SELECTOR, value="a.img-block")
         element_bundle[index].click()
-        time.sleep(2)
+        time.sleep(1)
 
         getElement(browser)
         backElement(browser)
@@ -50,11 +50,12 @@ def getElement(browser):
     element_membership_fee = browser.find_element(by=By.CSS_SELECTOR, value="a > #list_price").text
 
     print("title : {}, brand : {}, price : {}, membership fee : {}".format(element_title, element_brand, element_price, element_membership_fee))
+    time.sleep(1)
     return 0
 
 def backElement(browser):
     browser.back()
-    time.sleep(2)
+    time.sleep(3)
     return 0
 
 def quitBrowser(browser):
