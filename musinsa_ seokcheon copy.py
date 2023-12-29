@@ -62,13 +62,16 @@ def pageclick():
         time.sleep(2)
 
 while True:
-    pageclick()
-    total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn") 
-    total_page[7].click()
+    try:
+        pageclick()
+        total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn") 
+        total_page[7].click()
+        time.sleep(2)
+    except:
+        browser.quit()
 
 
 
-pass
 
 
 

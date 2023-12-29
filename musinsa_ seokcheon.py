@@ -56,7 +56,8 @@ for page_number in range(3,len(total_page)-1) :                                 
             print("{}".format(comment))
         
         if page_number < len(total_page) :
-            total_page[page_number+1].click()
+            total_page[page_number].click()
+            time.sleep(2)
         else :
             break
 pass

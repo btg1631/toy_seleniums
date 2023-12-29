@@ -52,10 +52,11 @@ def getElement(browser, collection):
     # 회원가 a > #list_price
     element_membership_fee = browser.find_element(by=By.CSS_SELECTOR, value="a > #list_price").text
 
-    collection.insert_one({"title" : element_title, "brand" : element_brand, "price" : element_price, "membership fee" : element_membership_fee})
-    
+    coll_element = collection.insert_one({"title" : element_title, "brand" : element_brand, "price" : element_price, "membership fee" : element_membership_fee})
+    element_id = coll_element.inserted_id
+    print("title : {}, brand : {}, price : {}, membership fee : {}".format(element_title, element_brand, element_price, element_membership_fee))
     time.sleep(1)
-    return print("title : {}, brand : {}, price : {}, membership fee : {}".format(element_title, element_brand, element_price, element_membership_fee))
+    return element_id
 
 # 뒤로가기
 def backElement(browser):
