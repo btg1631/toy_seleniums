@@ -29,9 +29,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select 
 
 
-total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn") 
+element_total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn") 
     
-for page_number in range(3,len(total_page)-1) :                                                      #페이지 넘버 별로 클릭하기 위해 순서
+for page_number in range(3,len(element_total_page)-1) :                                                      #페이지 넘버 별로 클릭하기 위해 순서
         total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn")  
         
         element_name = browser.find_elements(by = By.CSS_SELECTOR, value = "p.review-profile__name")                      # 닉네임 리스트
@@ -55,14 +55,17 @@ for page_number in range(3,len(total_page)-1) :                                 
             print("{}".format(detail))
             print("{}".format(comment))
         
-        if page_number < len(total_page) :
-            total_page[page_number].click()
-            time.sleep(2)
-        else :
-            break
-pass
+#         if page_number < len(total_page) :
+#             time.sleep(10)
+#             total_page[page_number].click()
+#             time.sleep(2)
+#         else :
+#             break
+# pass
 
-
+# Exception has occurred: ElementClickInterceptedException
+# Message: element click intercepted: Element <a href="javascript:void(0);" class="paging-btn btn" onclick="ReviewPage.goPage(...); return false;">2</a> is not clickable at point (895, 844). Other element would receive the click: <div class="sc-1n9z06l-0 gUyyNW">...</div>
+#   (Session info: chrome=120.0.6099.130)
 
 
 
