@@ -31,29 +31,36 @@ from selenium.webdriver.support.ui import Select
 
 element_total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn") 
     
-for page_number in range(3,len(element_total_page)-1) :                                                      #페이지 넘버 별로 클릭하기 위해 순서
-        total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn")  
+# for page_number in range(3,len(element_total_page)-1) :                                                      #페이지 넘버 별로 클릭하기 위해 순서
+def review() :
+    total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn")  
+    
+    element_name = browser.find_elements(by = By.CSS_SELECTOR, value = "p.review-profile__name")                      # 닉네임 리스트
+    element_detail = browser.find_elements(by = By.CSS_SELECTOR, value = "div.review-goods-information__item")        # 세부 정보 리스트
+    try :
+        element_comment = browser.find_elements(by = By.CSS_SELECTOR, value = "div.review-contents__text")                # 댓글 리스트
+        pass
+    except:
+        element_comment = ""          
+        pass
+    finally:
+        pass
+
+    for index in range(len(element_name)) :                                                                 #닉네임 리스트 수에 매치하여 세부정보,댓글을 출력
+
+        name = element_name[index].text
+        detail = element_detail[index].text
+        comment = element_comment[index].text
         
-        element_name = browser.find_elements(by = By.CSS_SELECTOR, value = "p.review-profile__name")                      # 닉네임 리스트
-        element_detail = browser.find_elements(by = By.CSS_SELECTOR, value = "div.review-goods-information__item")        # 세부 정보 리스트
-        try :
-            element_comment = browser.find_elements(by = By.CSS_SELECTOR, value = "div.review-contents__text")                # 댓글 리스트
-            pass
-        except:
-            comments = ""          
-            pass
-        finally:
-            pass
+        print("{}".format(name))
+        print("{}".format(detail))
+        print("{}".format(comment))
 
-        for index in range(len(element_name)) :                                                                 #닉네임 리스트 수에 매치하여 세부정보,댓글을 출력
+    return total_page
 
-            name = element_name[index].text
-            detail = element_detail[index].text
-            comment = element_comment[index].text
-           
-            print("{}".format(name))
-            print("{}".format(detail))
-            print("{}".format(comment))
+inserted_id = getElement(browser, collection)
+
+review(inserted_id)
         
 #         if page_number < len(total_page) :
 #             time.sleep(10)
