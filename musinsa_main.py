@@ -1,12 +1,17 @@
 import musinsa_youngji
+import musinsa_seokcheon
 
 def main() :
     try:
         uri="https://www.musinsa.com/app/"
         browser = musinsa_youngji.getBrowserFromURI(uri)
         collection = musinsa_youngji.Connectdb("musinsa_item")
+        collection2 = musinsa_youngji.Connectdb("musinsa_review")
         musinsa_youngji.clickElement(browser, collection)
-        element_id = musinsa_youngji.getElement(browser, collection)
+        musinsa_youngji.getElement(browser, collection)
+
+        musinsa_seokcheon.information(collection2)
+
     except:
         pass    # 업무 코드 문제 발생 시 대처 코드
     finally :

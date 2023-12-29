@@ -30,13 +30,7 @@ def clickElement(browser, collection):
         backElement(browser)
     return 0
 
-# mongodb 연결
-def Connectdb(collection_name):
-    from pymongo import MongoClient
-    mongoClient = MongoClient("mongodb://localhost:27017")
-    database = mongoClient["gatheringdatas"]
-    collection = database[collection_name]
-    return collection
+
 
 # 제품 정보 저장
 def getElement(browser, collection):
