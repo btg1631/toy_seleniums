@@ -14,68 +14,67 @@ def getBrowserFromURI(uri):
     browser.get(uri)    # - 주소 입력
     return browser
 
-def clickCategory(browser):
+# 제품 클릭
+def clickElement(browser, collection):
     # 카테고리 클릭 : div:nth-child(1) > div.sc-8hpehb-7.liOFHO > ul > li:nth-child(1) > a
     category = browser.find_element(by=By.CSS_SELECTOR, value="div:nth-child(1) > div.sc-8hpehb-7.liOFHO > ul > li:nth-child(1) > a")
     category.click()
 
-# 제품 클릭
-def clickElement(browser):
     # for element in element_bundle[0:5]:
     for index in range(4):
         element_bundle = browser.find_elements(by=By.CSS_SELECTOR, value="a.img-block")
         element_bundle[index].click()
         time.sleep(1)
 
-        getElement(browser)
+        getElement(browser, collection)
         backElement(browser)
-    quitBrowser(browser)
     return 0
 
-def getElement(browser):
-    # 제품 정보 저장~~!!!
+# mongodb 연결
+def Connectdb(collection_name):
+    from pymongo import MongoClient
+    mongoClient = MongoClient("mongodb://localhost:27017")
+    database = mongoClient["gatheringdatas"]
+    collection = database[collection_name]
+    return collection
+
+# 제품 정보 저장
+def getElement(browser, collection):
     # 제품 이름 : div.right_contents.section_product_summary > span > em
     element_title = browser.find_element(by=By.CSS_SELECTOR, value="div.right_contents.section_product_summary > span > em").text
-
     # 브랜드 strong > a
     element_brand = browser.find_element(by=By.CSS_SELECTOR, value="strong > a").text
-
     # 판매가 #goods_price > del
     try:
         element_price = browser.find_element(by=By.CSS_SELECTOR, value="#goods_price > del").text
     except:
         element_price = browser.find_element(by=By.CSS_SELECTOR, value="#goods_price").text
-
     # 회원가 a > #list_price
     element_membership_fee = browser.find_element(by=By.CSS_SELECTOR, value="a > #list_price").text
 
-    print("title : {}, brand : {}, price : {}, membership fee : {}".format(element_title, element_brand, element_price, element_membership_fee))
+    collection.insert_one({"title" : element_title, "brand" : element_brand, "price" : element_price, "membership fee" : element_membership_fee})
+    
     time.sleep(1)
-    return 0
+    return print("title : {}, brand : {}, price : {}, membership fee : {}".format(element_title, element_brand, element_price, element_membership_fee))
 
+# 뒤로가기
 def backElement(browser):
     browser.back()
     time.sleep(3)
     return 0
 
+# 브라우저 종료
 def quitBrowser(browser):
-    # 브라우저 종료
     browser.quit()
     return 0
-
 
 if __name__ == "__main__":
     try:
         browser = getBrowserFromURI("https://www.musinsa.com/app/")
-        clickCategory(browser)
-        clickElement(browser)
+        collection = Connectdb("musinsa_item")
+        clickElement(browser, collection)
     except:
-        pass    # 업무 코드 문제 발생 시 대처 코드
+        pass
     finally :
-        pass    # try나 except이 끝난 후 무조건 실행 코드
-
-
-
-
-
+        quitBrowser(browser)
 
