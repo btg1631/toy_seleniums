@@ -28,23 +28,41 @@ html = browser.page_source
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select 
 
-total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.page2 > a > span") 
 
-element_name = browser.find_element(by = By.CSS_SELECTOR, value = "p.review-profile__name")                      # 닉네임
-element_name.text
+total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn") 
+    
+for page_number in range(4,len(total_page)-1) :                                                      #페이지 넘버 별로 클릭하기 위해 순서
+        total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn")  
+        
+        element_name = browser.find_elements(by = By.CSS_SELECTOR, value = "p.review-profile__name")                      # 닉네임 리스트
+        element_detail = browser.find_elements(by = By.CSS_SELECTOR, value = "div.review-goods-information__item")        # 세부 정보 리스트
+        try :
+            element_comment = browser.find_elements(by = By.CSS_SELECTOR, value = "div.review-contents__text")                # 댓글 리스트
+            pass
+        except:
+            comments = ""          
+            pass
+        finally:
+            pass
 
-element_detail = browser.find_element(by = By.CSS_SELECTOR, value = "div.review-goods-information__item")        # 세부 정보
-element_name.text
+        for index in range(len(element_name)) :                                                                 #닉네임 리스트 수에 매치하여 세부정보,댓글을 출력
 
-try :
-    element_comment = browser.find_element(by = By.CSS_SELECTOR, value = "div.review-contents__text")                # 댓글
-    element_comment.text
-    pass
-except:
-    comments = ""          
-    pass
-finally:
-    pass
+            name = element_name[index].text
+            detail = element_detail[index].text
+            comment = element_comment[index].text
+           
+            print("{}".format(name))
+            print("{}".format(detail))
+            print("{}".format(comment))
+            
+        if total_page[page_number] == "div.pagination.textRight > div > a.fa.fa-angle-right.paging-btn.btn.next" :
+            total_page[page_number].click()
+        elif total_page[page_number] == "div.pagination.textRight > div > a.fa.fa-angle-right.paging-btn.btn.next" :
+            total_page[page_number].click()
+        else :
+            break
+pass
+
 
 
 
