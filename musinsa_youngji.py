@@ -22,22 +22,16 @@ def getBrowserFromURI(uri):
     browser.get(uri)    # - 주소 입력
     return browser
 
-
 def clickCategory(browser):
     # 카테고리 클릭 : div:nth-child(1) > div.sc-8hpehb-7.liOFHO > ul > li:nth-child(1) > a
     category = browser.find_element(by=By.CSS_SELECTOR, value="div:nth-child(1) > div.sc-8hpehb-7.liOFHO > ul > li:nth-child(1) > a")
     category.click()
 
-
 # 제품 클릭
-def clickElement(browser, collection, index):
-    # # for element in element_bundle[0:5]:
-    # for index in range(4):
+def clickElement(browser, index):
     element_bundle = browser.find_elements(by=By.CSS_SELECTOR, value="a.img-block")
     element_bundle[index].click()
     time.sleep(1)
-
-
 
 # 제품 정보 저장
 def getElement(browser, collection):
@@ -55,15 +49,13 @@ def getElement(browser, collection):
 
     coll_element = collection.insert_one({"title" : element_title, "brand" : element_brand, "price" : element_price, "membership fee" : element_membership_fee})
     element_id = coll_element.inserted_id
-    print("title : {}, brand : {}, price : {}, membership fee : {}".format(element_title, element_brand, element_price, element_membership_fee))
     time.sleep(1)
     return element_id
-
+    
 # 뒤로가기
 def backElement(browser):
     browser.back()
     time.sleep(3)
-    
 
 # 브라우저 종료
 def quitBrowser(browser):
@@ -74,8 +66,9 @@ if __name__ == "__main__":
     try:
         browser = getBrowserFromURI("https://www.musinsa.com/app/")
         collection = Connectdb("musinsa_item")
-        clickElement(browser, collection)
-        element_id = getElement(browser, collection)
+        for index in range(4):
+            clickElement(browser, index)
+            getElement(browser, collection)
     except:
         pass
     finally :

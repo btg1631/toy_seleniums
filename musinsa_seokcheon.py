@@ -38,9 +38,9 @@ def Connectdb(collection_name):
     return collection
 
     
-# for page_number in range(3,len(element_total_page)-1) :                                                      #페이지 넘버 별로 클릭하기 위해 순서
+# for page_number in range(3,len(element_total_page)-1) :                       #페이지 넘버 별로 클릭하기 위해 순서
 # element_total_page = browser.find_elements(by = By.CSS_SELECTOR,value = "div.pagination.textRight > div.wrapper > a.paging-btn.btn")  
-def information(collection) :
+def information(browser, collection, element_id):
     
     element_name = browser.find_elements(by = By.CSS_SELECTOR, value = "p.review-profile__name")                      # 닉네임 리스트
     element_detail = browser.find_elements(by = By.CSS_SELECTOR, value = "div.review-goods-information__item")        # 구매 정보 리스트
@@ -52,18 +52,15 @@ def information(collection) :
         pass
 #     return element_name,element_detail,element_comment
 
-
-# 
-# def review(element_name,element_detail,element_comment,collection,inserted_id) :
-    # inserted_id = musinsa_youngji.getElement(browser, collection)
-    for index in range(len(element_name)) :                                                                 #닉네임 리스트 수에 매치하여 세부정보,댓글을 출력
+# def review(element_name,element_detail,element_comment,collection, element_id) :
+    # element_id = musinsa_youngji.getElement(browser, collection)
+    for index in range(len(element_name)) :                       #닉네임 리스트 수에 매치하여 세부정보,댓글을 출력
 
         name = element_name[index].text
         detail = element_detail[index].text
         comment = element_comment[index].text
         
-    
-        collection.insert_one({"닉네임": name,"구매정보": detail, "댓글": comment})
+        collection.insert_one({"상품 id": element_id, "닉네임": name,"구매정보": detail, "댓글": comment})
     return 0
 
 if __name__ == "__main__":
