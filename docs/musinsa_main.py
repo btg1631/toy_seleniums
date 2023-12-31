@@ -5,8 +5,8 @@ def main() :
     try:
         uri="https://www.musinsa.com/app/"
         browser = musinsa_youngji.getBrowserFromURI(uri)
-        collection = musinsa_youngji.Connectdb("musinsa_item")
-        collection2 = musinsa_youngji.Connectdb("musinsa_review")
+        collection = musinsa_youngji.Connectdb("musinsa_items")
+        collection2 = musinsa_youngji.Connectdb("musinsa_reviews")
 
         musinsa_youngji.clickCategory(browser)
         for index in range(4):

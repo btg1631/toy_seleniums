@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time
+import musinsa_seokcheon
 
 # mongodb 연결
 def Connectdb(collection_name):
@@ -66,9 +67,13 @@ if __name__ == "__main__":
     try:
         browser = getBrowserFromURI("https://www.musinsa.com/app/")
         collection = Connectdb("musinsa_item")
+        collection2 = Connectdb("musinsa_review")
+
         for index in range(4):
             clickElement(browser, index)
-            getElement(browser, collection)
+            element_id = getElement(browser, collection)
+            musinsa_seokcheon.information(browser, collection2, element_id)
+            backElement(browser)            
     except:
         pass
     finally :
