@@ -11,7 +11,7 @@ import musinsa_seokcheon
 # mongodb 연결
 def Connectdb(collection_name):
     from pymongo import MongoClient
-    mongoClient = MongoClient("mongodb://192.168.0.65:27017")
+    mongoClient = MongoClient("mongodb://192.168.10.245:27017")
     database = mongoClient["gatheringdatas"]
     collection = database[collection_name]
     return collection
